@@ -1,0 +1,11 @@
+- Prodigal meta-mode ORF calling per MAG to improve protein accuracy (required in the pipeline; miner can fall back only if run standalone).
+- Parse assembled MAG FASTA files.
+- Detect CRISPR arrays using repeat/spacer heuristics (min 3 repeats, repeat 23-47 bp, spacers 20-60 bp); CRONUS (required) for noncanonical/imperfect arrays and CRISPRCasFinder (required) for canonical arrays are both ingested by the pipeline.
+- If running the miner standalone without Prodigal: it can call ORFs on both strands with the built-in lightweight caller.
+- Assemble operons: arrays plus ORFs within a configurable flank window (default 10 kbp).
+- Score/rank operons by array quality, proximity and density of ORFs, length sanity, and repeat/spacer consistency.
+- Two-tier MMseqs2 GPU clustering for sensitivity and deduplication:
+  - Tight pass (e.g., 0.9 id/0.8 cov) to collapse near-duplicates.
+  - Coarse pass (e.g., 0.5 id/0.33 cov) on tight representatives for family-level grouping.
+- Generate cluster representatives (tight and coarse) for downstream modeling/search.
+- Optional GPU search against a provided CRISPR/Cas reference DB to tag known families and highlight novel clusters.
